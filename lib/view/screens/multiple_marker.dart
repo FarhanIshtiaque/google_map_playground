@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_map_playground/controller/marker_controller.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MyApp extends StatelessWidget {
@@ -36,33 +38,19 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    final markerController = Get.put(MarkerController());
     return Scaffold(
 
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: SizedBox(
-              width: width*.8,
-              height: height*.4,
-              child: GoogleMap(
+      body: GoogleMap(
+        // markers: markerController.allMarker,
 
-                mapType: MapType.normal,
-                initialCameraPosition: _kGooglePlex,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
-              ),
-            ),
-          ),
-        ],
+        mapType: MapType.normal,
+        initialCameraPosition: _kGooglePlex,
+        onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
       ),
 
     );
-  }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }

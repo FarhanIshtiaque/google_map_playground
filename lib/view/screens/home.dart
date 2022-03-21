@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_map_playground/view/screens/multiple_marker.dart';
+import 'package:google_map_playground/view/screens/second_page.dart';
 import 'package:google_map_playground/view/wigets/buttons/button.dart';
 
 class Home extends StatelessWidget {
@@ -22,7 +23,7 @@ class Home extends StatelessWidget {
               buttonNameWidget: const Text('Multiple Marker'),
             ),
             const SizedBox(height: 20,),
-            Button(onPressed: (){}, buttonNameWidget: Text('Second Page'))
+            Button(onPressed: (){Get.to(SecondPage());}, buttonNameWidget: Text('Second Page'))
 
           ],
         ),
