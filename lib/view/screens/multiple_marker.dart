@@ -21,11 +21,11 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(40.7128, -74.0060),
-    zoom: 10.4746,
+    zoom: 1,
   );
 
   static const CameraPosition _kLake = CameraPosition(
@@ -38,17 +38,22 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    final markerController = Get.put(MarkerController());
+     final markerController = Get.put(MarkerController());
     return Scaffold(
+      appBar: AppBar(),
 
-      body: GoogleMap(
-        // markers: markerController.allMarker,
+      body: Obx(
+        ()=> GoogleMap(
 
-        mapType: MapType.normal,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
+           markers: markerController.allMarker.value,
+
+
+          mapType: MapType.normal,
+          initialCameraPosition: _kGooglePlex,
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
+        ),
       ),
 
     );

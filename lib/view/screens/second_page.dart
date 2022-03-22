@@ -7,6 +7,7 @@ class SecondPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final markerController = Get.put(MarkerController());
 
     return Container();
   }
