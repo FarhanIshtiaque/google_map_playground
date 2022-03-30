@@ -38,6 +38,8 @@ dependencies:
   google_maps_flutter: ^2.1.2
   dio: ^4.0.4
   logger: ^1.1.0
+  custom_info_window: ^1.0.1
+  clippy_flutter: ^1.1.1
 
 dev_dependencies:
   flutter_test:

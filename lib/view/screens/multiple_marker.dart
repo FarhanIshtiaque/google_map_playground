@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_map_playground/controller/marker_controller.dart';
@@ -38,24 +39,36 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-     final markerController = Get.put(MarkerController());
+    final markerController = Get.put(MarkerController());
     return Scaffold(
       appBar: AppBar(),
-
       body: Obx(
-        ()=> GoogleMap(
-
-           markers: markerController.allMarker.value,
-
-
-          mapType: MapType.normal,
-          initialCameraPosition: _kGooglePlex,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
+        () => Stack(
+          children: [
+            GoogleMap(
+              zoomControlsEnabled: true,
+              markers: markerController.allMarker.value,
+              mapType: MapType.normal,
+              initialCameraPosition: _kGooglePlex,
+              onTap: (position) {
+                markerController.customInfoWindowController.hideInfoWindow!();
+              },
+              onCameraMove: (position) {
+                markerController.customInfoWindowController.onCameraMove!();
+              },
+              onMapCreated: (GoogleMapController controller) async {
+                markerController.customInfoWindowController.googleMapController = controller;
+              },
+            ),
+            CustomInfoWindow(
+              controller: markerController.customInfoWindowController,
+              offset: 30,
+              width: 150,
+              height: 80,
+            ),
+          ],
         ),
       ),
-
     );
   }
 }
