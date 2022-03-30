@@ -31,15 +31,16 @@ class MarkerController extends GetxController {
         if (result is Response) {
           var jsonResponse = result.data;
           List<UserModel> userModelList = [];
-          if (jsonResponse.length > 0)
+          if (jsonResponse.length > 0) {
             jsonResponse!.forEach((user) => userModelList.add(UserModel.fromJson(user)));
+          }
           // List<UserModel> userModel =
           // jsonResponse.map((json) => UserModel.fromJson(json)).toList();
           for (var i = 0; i < userModelList.length; i++) {
             allMarker.add(
               Marker(
                 onTap: () {
-                  Future.delayed(Duration(milliseconds: 300), () {
+                  Future.delayed(const Duration(milliseconds: 300), () {
                     customInfoWindowController.addInfoWindow!(
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,7 +48,9 @@ class MarkerController extends GetxController {
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: const Color(0xff64CEBA),
+                                color: userModelList[i].id! >= 5
+                                    ? const Color(0xff64CEBA)
+                                    : Colors.greenAccent,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Padding(
@@ -66,7 +69,9 @@ class MarkerController extends GetxController {
                           ),
                           CustomPaint(
                             painter: TrianglePainter(
-                              strokeColor: const Color(0xff64CEBA),
+                              strokeColor: userModelList[i].id! >= 5
+                                  ? const Color(0xff64CEBA)
+                                  : Colors.greenAccent,
                               strokeWidth: 1,
                               paintingStyle: PaintingStyle.fill,
                             ),
